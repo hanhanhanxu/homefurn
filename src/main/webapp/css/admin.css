@@ -1,0 +1,80 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+a,
+li {
+    list-style: none;
+}
+a:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 头部样式 */
+.layui-layout-admin {
+    position: relative;
+}
+
+.layui-layout-admin .layui-logo {
+    font-size: 24px;
+    left: 560px;
+}
+
+.layui-nav-child dd{
+    line-height: 36px;
+}
+.layui-layout-left{
+    top:20px;
+    left:30px;
+    font-size: 18px;
+    font-weight: 300px;
+}
+.layui-layout-left a{
+    color: #cccccc;
+}
+.layui-layout-left a:hover{
+    color: #337AAA;
+}
+ .layui-nav {
+    position: absolute;
+    left: 1140px;
+}
+
+.main-body {
+    width:100%;
+    height: 601px;
+    position: relative;
+}
+.create{
+    height: 100%;
+    width: 100%;
+    position: absolute;
+}
+.info-form{
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    margin-left: -110px;
+    height: 120px;
+    width: 220px;
+    padding: 10px;
+    background-color: #313439;
+    border: 3px solid #cccccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px #cccccc;
+}
+
+.info-form div{
+    color: #cccccc;
+    font-size: 16px;
+    display: block;
+    margin:0 auto;
+    margin-top: 18px;
+    margin-bottom: 16px;
+}
+.info-form div span{
+    width: 160px;
+    text-decoration: underline;
+}

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:beans="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+    <!-- @Controller注解扫描 -->
+    <!--后端-->
+    <context:component-scan base-package="hx.insist.controller"></context:component-scan>
+
+    <!-- 注解驱动:自动为我们配置最新版本的处理器映射器和处理器适配器 conversion-service="conversionService"-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <mvc:default-servlet-handler></mvc:default-servlet-handler>
+
+    <!--设置访问得到静态资源-->
+    <!--所有使用到/assets/**路径的资源(mapping)  都去/assets/里面找(location)-->
+    <!--<mvc:resources mapping="/assets/**" location="/assets/" cache-period="31556926"/>
+    <mvc:resources mapping="/assets-2/**" location="/assets-2/" cache-period="31556926"/>
+    <mvc:resources mapping="/assets-3/**" location="/assets-3/" cache-period="31556926"/>
+    <mvc:resources mapping="/images/**" location="/images/" cache-period="31556926"/>
+    <mvc:resources mapping="/images-2/**" location="/images-2/" cache-period="31556926"/>
+    <mvc:resources mapping="/images-3/**" location="/images-3/" cache-period="31556926"/>
+    <mvc:resources mapping="/static/**" location="/static/" cache-period="31556926"/>
+    <mvc:resources mapping="/ueditor/**" location="/ueditor/" cache-period="31556926"/>-->
+
+    <!--都要配置-->
+    <!--<mvc:resources mapping="/coverimg/**" location="/coverimg/" cache-period="31556926"/>-->
+
+
+
+    <!--文件上传配置-->
+    <bean name="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="UTF-8"></property>
+    </bean>
+
+    <!--拦截器配置-->
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <!-- 拦截所有mvc控制器 -->
+            <mvc:mapping path="/**"/>
+            <bean class="hx.insist.interceptor.MyInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+
+
+    <!--
+        全局异常处理器
+        只要类实现了HandlerExceptionResolver接口，就是一个全局异常处理器哦
+        -->
+    <!--<bean class="hx.insist.exception.CustomExceptionResolver"></bean>-->
+
+
+
+
+</beans>

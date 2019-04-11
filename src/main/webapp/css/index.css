@@ -1,0 +1,180 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+a,
+li {
+    list-style: none;
+}
+a:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* 头部样式 */
+.layui-layout-admin {
+    position: relative;
+}
+
+.layui-layout-admin .layui-logo {
+    font-size: 24px;
+}
+
+.layui-header .input-group {
+    width: 600px;
+    position: absolute;
+    margin-left: 375px;
+    margin-top: 15px;
+}
+
+.input-group span {
+    font-size: 16px;
+}
+
+.layui-header .layui-nav {
+    position: absolute;
+    left: 1140px;
+}
+
+/* 中间内容区域 */
+ .layui-nav-tree {
+    width: 130px;
+    position: absolute;
+    top: 100px;
+}
+
+.main-contain {
+    position: absolute;
+    left: 140px;
+    width: 1050px;
+    display: inline-block;
+    margin-left: 50px;
+    margin-top: 5px;
+}
+
+.main-contain ul {
+    width: 100%;
+}
+
+.main-contain ul li {
+    width: 200px;
+    height: 260px; 
+    padding: 8px;
+    margin-bottom:5px; 
+    display: inline-block;
+    box-sizing: border-box;
+    border: 1px solid #CCCCCC;
+}
+
+.main-contain ul li span{
+    font-size: 16px;
+    color: #EA2000;
+}
+
+.main-panel img{
+    width: 180px;
+    height: 180px;
+
+}
+.main-contain ul li a{
+    color: #867774;
+}
+.main-contain ul li a:hover{
+    text-decoration: none;
+    color: #EA2000;
+}
+.main-contain .main-panel div{
+     font-size: 12px;
+     height: 38px;
+     border-top:1px dashed #CCCCCC;
+     overflow: hidden;
+}
+
+
+/* 底部分页部分 */
+.main .page{
+    position: absolute;
+     bottom: -600px;
+    left: 50%;
+   margin-left: -195px;
+}
+
+/* 登录 */
+#loginModal{
+    top: 100px;
+    color: #CCCCCC;
+}
+
+#loginModal .modal-header{
+    text-align: center;
+}
+#loginModal .modal-header span{
+    color: #ffffff;
+}
+#loginModal .modal-content{
+    width: 500px;
+    height: 400px;
+    background-color: #393D49;
+}
+#loginModal .modal-body{
+    margin:0px 10px 10px;
+    height: 300px;
+    
+}
+#loginModal .modal-loginform{
+    margin-left: 80px;
+    margin-top: 50px;
+}
+#loginModal .modal-loginform div{
+    margin-bottom: 12px;
+}
+#loginModal .input-group input{
+    width:70%;
+}
+#loginModal .input-group button{
+    margin-left: 100px;
+}
+
+
+/* 注册 */
+#registerModal{
+    top: 50px;
+    color: #CCCCCC;
+}
+
+#registerModal .modal-header{
+    text-align: center;
+}
+#registerModal .modal-header span{
+    color: #ffffff;
+}
+#registerModal .modal-content{
+    width: 500px;
+    height: 500px;
+    background-color: #393D49;
+}
+#registerModal .modal-body{
+    margin:0px  10px;
+    height: 300px;
+    /* border: 1px solid #CCCCCC; */
+}
+#registerModal .modal-registerform{
+    margin-left: 80px;
+    margin-top: 30px;
+}
+#registerModal .modal-registerform div{
+    margin-bottom: 12px;
+}
+#registerModal .input-group input{
+    width:70%;
+}
+#registerModal .input-group button{
+    margin-left: 100px;
+}
+/* #registerModal .input-group a{
+    margin-left: 200px;
+}
+#registerModal .input-group a:hover{
+    color: #ffffff;
+} */

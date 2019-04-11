@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hx.insist.mapper.SuperadminMapper" >
+  <resultMap id="BaseResultMap" type="hx.insist.pojo.Superadmin" >
+    <id column="said" property="said" jdbcType="VARCHAR" />
+    <result column="saname" property="saname" jdbcType="VARCHAR" />
+    <result column="sapass" property="sapass" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    said, saname, sapass
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="hx.insist.pojo.SuperadminExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from superadmin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from superadmin
+    where said = #{said,jdbcType=VARCHAR}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from superadmin
+    where said = #{said,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="hx.insist.pojo.SuperadminExample" >
+    delete from superadmin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="hx.insist.pojo.Superadmin" >
+    insert into superadmin (said, saname, sapass
+      )
+    values (#{said,jdbcType=VARCHAR}, #{saname,jdbcType=VARCHAR}, #{sapass,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="hx.insist.pojo.Superadmin" >
+    insert into superadmin
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="said != null" >
+        said,
+      </if>
+      <if test="saname != null" >
+        saname,
+      </if>
+      <if test="sapass != null" >
+        sapass,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="said != null" >
+        #{said,jdbcType=VARCHAR},
+      </if>
+      <if test="saname != null" >
+        #{saname,jdbcType=VARCHAR},
+      </if>
+      <if test="sapass != null" >
+        #{sapass,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="hx.insist.pojo.SuperadminExample" resultType="java.lang.Integer" >
+    select count(*) from superadmin
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update superadmin
+    <set >
+      <if test="record.said != null" >
+        said = #{record.said,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saname != null" >
+        saname = #{record.saname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sapass != null" >
+        sapass = #{record.sapass,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update superadmin
+    set said = #{record.said,jdbcType=VARCHAR},
+      saname = #{record.saname,jdbcType=VARCHAR},
+      sapass = #{record.sapass,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="hx.insist.pojo.Superadmin" >
+    update superadmin
+    <set >
+      <if test="saname != null" >
+        saname = #{saname,jdbcType=VARCHAR},
+      </if>
+      <if test="sapass != null" >
+        sapass = #{sapass,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where said = #{said,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hx.insist.pojo.Superadmin" >
+    update superadmin
+    set saname = #{saname,jdbcType=VARCHAR},
+      sapass = #{sapass,jdbcType=VARCHAR}
+    where said = #{said,jdbcType=VARCHAR}
+  </update>
+
+
+  <!--通过username查询所有-->
+  <select id="selectByUsernamePassword" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select *
+    from superadmin
+    where saname = #{0}
+    and sapass = #{1}
+  </select>
+
+
+</mapper>

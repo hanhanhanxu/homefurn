@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hx.insist.mapper.FittingMapper" >
+  <resultMap id="BaseResultMap" type="hx.insist.pojo.Fitting" >
+    <id column="fid" property="fid" jdbcType="VARCHAR" />
+    <result column="fname" property="fname" jdbcType="VARCHAR" />
+    <result column="ftype" property="ftype" jdbcType="VARCHAR" />
+    <result column="fstyle" property="fstyle" jdbcType="VARCHAR" />
+    <result column="fprice" property="fprice" jdbcType="DECIMAL" />
+    <result column="fimg" property="fimg" jdbcType="VARCHAR" />
+    <result column="fintro" property="fintro" jdbcType="VARCHAR" />
+    <result column="fsvolume" property="fsvolume" jdbcType="INTEGER" />
+    <result column="fsign" property="fsign" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    fid, fname, ftype, fstyle, fprice, fimg, fintro, fsvolume, fsign
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="hx.insist.pojo.FittingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from fitting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from fitting
+    where fid = #{fid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from fitting
+    where fid = #{fid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="hx.insist.pojo.FittingExample" >
+    delete from fitting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="hx.insist.pojo.Fitting" >
+    insert into fitting (fid, fname, ftype, 
+      fstyle, fprice, fimg, 
+      fintro, fsvolume, fsign
+      )
+    values (#{fid,jdbcType=VARCHAR}, #{fname,jdbcType=VARCHAR}, #{ftype,jdbcType=VARCHAR}, 
+      #{fstyle,jdbcType=VARCHAR}, #{fprice,jdbcType=DECIMAL}, #{fimg,jdbcType=VARCHAR}, 
+      #{fintro,jdbcType=VARCHAR}, #{fsvolume,jdbcType=INTEGER}, #{fsign,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="hx.insist.pojo.Fitting" >
+    insert into fitting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        fid,
+      </if>
+      <if test="fname != null" >
+        fname,
+      </if>
+      <if test="ftype != null" >
+        ftype,
+      </if>
+      <if test="fstyle != null" >
+        fstyle,
+      </if>
+      <if test="fprice != null" >
+        fprice,
+      </if>
+      <if test="fimg != null" >
+        fimg,
+      </if>
+      <if test="fintro != null" >
+        fintro,
+      </if>
+      <if test="fsvolume != null" >
+        fsvolume,
+      </if>
+      <if test="fsign != null" >
+        fsign,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fid != null" >
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="fname != null" >
+        #{fname,jdbcType=VARCHAR},
+      </if>
+      <if test="ftype != null" >
+        #{ftype,jdbcType=VARCHAR},
+      </if>
+      <if test="fstyle != null" >
+        #{fstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="fprice != null" >
+        #{fprice,jdbcType=DECIMAL},
+      </if>
+      <if test="fimg != null" >
+        #{fimg,jdbcType=VARCHAR},
+      </if>
+      <if test="fintro != null" >
+        #{fintro,jdbcType=VARCHAR},
+      </if>
+      <if test="fsvolume != null" >
+        #{fsvolume,jdbcType=INTEGER},
+      </if>
+      <if test="fsign != null" >
+        #{fsign,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="hx.insist.pojo.FittingExample" resultType="java.lang.Integer" >
+    select count(*) from fitting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update fitting
+    <set >
+      <if test="record.fid != null" >
+        fid = #{record.fid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fname != null" >
+        fname = #{record.fname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ftype != null" >
+        ftype = #{record.ftype,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fstyle != null" >
+        fstyle = #{record.fstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fprice != null" >
+        fprice = #{record.fprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fimg != null" >
+        fimg = #{record.fimg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fintro != null" >
+        fintro = #{record.fintro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fsvolume != null" >
+        fsvolume = #{record.fsvolume,jdbcType=INTEGER},
+      </if>
+      <if test="record.fsign != null" >
+        fsign = #{record.fsign,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update fitting
+    set fid = #{record.fid,jdbcType=VARCHAR},
+      fname = #{record.fname,jdbcType=VARCHAR},
+      ftype = #{record.ftype,jdbcType=VARCHAR},
+      fstyle = #{record.fstyle,jdbcType=VARCHAR},
+      fprice = #{record.fprice,jdbcType=DECIMAL},
+      fimg = #{record.fimg,jdbcType=VARCHAR},
+      fintro = #{record.fintro,jdbcType=VARCHAR},
+      fsvolume = #{record.fsvolume,jdbcType=INTEGER},
+      fsign = #{record.fsign,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="hx.insist.pojo.Fitting" >
+    update fitting
+    <set >
+      <if test="fname != null" >
+        fname = #{fname,jdbcType=VARCHAR},
+      </if>
+      <if test="ftype != null" >
+        ftype = #{ftype,jdbcType=VARCHAR},
+      </if>
+      <if test="fstyle != null" >
+        fstyle = #{fstyle,jdbcType=VARCHAR},
+      </if>
+      <if test="fprice != null" >
+        fprice = #{fprice,jdbcType=DECIMAL},
+      </if>
+      <if test="fimg != null" >
+        fimg = #{fimg,jdbcType=VARCHAR},
+      </if>
+      <if test="fintro != null" >
+        fintro = #{fintro,jdbcType=VARCHAR},
+      </if>
+      <if test="fsvolume != null" >
+        fsvolume = #{fsvolume,jdbcType=INTEGER},
+      </if>
+      <if test="fsign != null" >
+        fsign = #{fsign,jdbcType=INTEGER},
+      </if>
+    </set>
+    where fid = #{fid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hx.insist.pojo.Fitting" >
+    update fitting
+    set fname = #{fname,jdbcType=VARCHAR},
+      ftype = #{ftype,jdbcType=VARCHAR},
+      fstyle = #{fstyle,jdbcType=VARCHAR},
+      fprice = #{fprice,jdbcType=DECIMAL},
+      fimg = #{fimg,jdbcType=VARCHAR},
+      fintro = #{fintro,jdbcType=VARCHAR},
+      fsvolume = #{fsvolume,jdbcType=INTEGER},
+      fsign = #{fsign,jdbcType=INTEGER}
+    where fid = #{fid,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAll" resultType="hx.insist.pojo.Fitting">
+    select fid , fname ,fprice , fimg
+    from fitting
+    where fsign = 1
+  </select>
+
+  <select id="fingByFtype" resultType="hx.insist.pojo.Fitting" parameterType="string">
+    select  fid , fname ,fprice , fimg
+    from fitting
+    where fsign = 1 and ftype = #{0}
+  </select>
+
+  <select id="fingByFstyle" resultType="hx.insist.pojo.Fitting" parameterType="string">
+    select  fid , fname ,fprice , fimg
+    from fitting
+    where fsign = 1 and fstyle = #{0}
+  </select>
+
+  <select id="fingByCondition" resultType="hx.insist.pojo.Fitting" parameterType="string">
+    select  fid , fname ,fprice , fimg
+    from fitting
+    where fsign = 1 and ftype = #{0} and fstyle = #{1}
+  </select>
+  <select id="selectFimgByFid" resultType="string" parameterType="string">
+    select fimg
+    from fitting
+    where fid = #{0}
+  </select>
+  <update id="updateFsvolumeBySid" parameterType="string">
+    update fitting
+    set fsvolume = fsvolume + 1
+    where fid = #{0}
+  </update>
+
+  <select id="selectForRank" resultType="hx.insist.pojo.Fitting">
+    select fid ,fname ,fprice ,fimg ,fsvolume
+    from fitting
+    order by fsvolume desc
+    limit 10
+  </select>
+</mapper>
