@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * 登录相关controller
@@ -62,10 +63,14 @@ public class LoginRegistController {
                     User user = userService.login(account.getUsername(),WebUtil.md5(account.getPassword()));
                     if(user==null){
                         model.addAttribute("msg","账号或密码错误");
+                        model.addAttribute("user",account);
                         return "/login.jsp";
                     }else{
                         //用户界面-----系统主界面，浏览家居
                         session.setAttribute("user",user);
+                        //储存装饰信息
+                        List<Suit> list = suitService.QueryAllByUid(user.getUid());
+                        session.setAttribute("suits",list);//sid uid sname
                         return "/menu.jsp";
                     }
                 }else{
@@ -101,6 +106,10 @@ public class LoginRegistController {
         //从数据库中查询看有没有和admin  user 重的用户名
         if(adminService.countAdminByUsername(user.getUsername())>0 || userService.countUserByUsername(user.getUsername())>0){
             model.addAttribute("msg","已存在此用户名！");
+            return "/regist.jsp";
+        }
+        if(userService.countEmail(user.getEmail())>0){
+            model.addAttribute("msg","此邮箱已被其他账号绑定！");
             return "/regist.jsp";
         }
 

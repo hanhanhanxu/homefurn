@@ -220,21 +220,6 @@
             <button type="submit">提交</button>
         </form>
     </div>
-    <%--<div id="addtype" style="display:none;" class="container-fluid">
-        <div class="row-fluid">
-            <div class="span12">
-                <form method="post" action="${pageContext.request.contextPath}/admin/addtypeImpl">
-                    <fieldset>
-                        <legend>新增种类</legend>
-                        <label>种类名称:</label><br>
-                        <input type="text"  name="typeName" required/>
-                        <span class="help-block">${msg}</span>
-                        <button type="submit" class="btn" onclick="addtype()">提交</button>
-                    </fieldset>
-                </form>
-            </div>
-        </div>
-    </div>--%>
 
     <%--新增风格--%>
     <div id="addstyle" style="display:none;">

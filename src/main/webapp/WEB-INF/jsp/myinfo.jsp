@@ -29,32 +29,26 @@
 <div class="layui-layout layui-layout-admin">
     <div class="layui-header">
         <div class="layui-logo"><a href="${pageContext.request.contextPath}/fitting/index">家居装饰中心</a></div>
-       <%-- <div class="input-group">
-            <input type="text" class="form-control" placeholder="请输入要搜索的宝贝" aria-describedby="basic-addon1">
-            <span class="input-group-addon" id="basic-addon1">
-                    <span class="glyphicon glyphicon-search"></span>
-                </span>
-        </div>--%>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
                     ${user.nickname}
                 </a>
                 <dl class="layui-nav-child">
-                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="${pageContext.request.contextPath}/user/info">修改信息</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/user/logoff">退出</a></li>
         </ul>
     </div>
 
+
     <div class="main-contain">
         <div class="left">
             <ul>
+                <li>昵称：<span>${user.nickname}</span></li>
                 <li>账号：<span>${user.username}</span></li>
-                <li>邮箱：<span>${user.email}</span></li>
                 <li>介绍：<span>${user.intro}</span></li>
-                <%--<li><a href="#" title="我是whowhhowho,我想买沙发">介绍</a></li>--%>
             </ul>
         </div>
         <div class="right">
@@ -148,6 +142,8 @@
         </div>
     </div>
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
+    <script src="${pageContext.request.contextPath}/layui/jquery.1.11.3.min.js"></script>
+    <script src="${pageContext.request.contextPath}/layui/input.js"></script>
     <script>
         //注意：导航 依赖 element 模块，否则无法进行功能性操作
         layui.use(['element', 'laypage', 'layer'], function () {

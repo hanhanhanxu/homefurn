@@ -29,31 +29,38 @@
 
     <%--头部--%>
     <div class="layui-header">
-            <div class="layui-logo">
-                <c:if test="${admin!=null}"><%--返回管理员主页--%>
-                    <a href="${pageContext.request.contextPath}/admin/index">家居装饰中心</a>
-                </c:if>
-                <c:if test="${admin==null}"><%--返回前台主页--%>
-                    <a href="${pageContext.request.contextPath}/fitting/index">家居装饰中心</a>
-                </c:if>
-            </div>
-        <div class="input-group">
+        <div class="layui-logo">
+            <c:if test="${admin!=null}"><%--返回管理员主页--%>
+                <a href="${pageContext.request.contextPath}/admin/index">家居装饰中心</a>
+            </c:if>
+            <c:if test="${admin==null}"><%--返回前台主页--%>
+                <a href="${pageContext.request.contextPath}/fitting/index">家居装饰中心</a>
+            </c:if>
+        </div>
+        <%--<div class="input-group">
             <input id="solrsearch" name="str" type="text" class="form-control" placeholder="请输入要搜索的宝贝" aria-describedby="basic-addon1">
             <span class="input-group-addon" id="basic-addon1" onclick="search()">
                 <span class="glyphicon glyphicon-search"></span>
             </span>
-        </div>
+        </div>--%>
 
 
-        <c:if test="${user.uid==null}"><%--显示登陆注册--%>
-            <ul class="layui-nav " lay-filter="">
-                <li class="layui-nav-item">
-                    <a data-toggle="modal" data-target="#loginModal">
-                        登陆
-                    </a>
-                </li>
-                <li class="layui-nav-item"><a data-toggle="modal" data-target="#registerModal">注册</a></li>
-            </ul>
+        <c:if test="${user.uid==null}">
+            <c:if test="${admin.aid!=null}"><%--显示管理员--%>
+                <ul class="layui-nav layui-layout-right">
+                    <li class="layui-nav-item">
+                        <a href="${pageContext.request.contextPath}/admin/index">
+                            管理员
+                        </a>
+                    </li>
+                </ul>
+            </c:if>
+            <c:if test="${admin.aid==null}"><%--显示登陆注册--%>
+                <ul class="layui-nav " lay-filter="">
+                    <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/login.jsp">登陆</a></li>
+                    <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/regist.jsp">注册</a></li>
+                </ul>
+            </c:if>
         </c:if>
         <c:if test="${user.uid!=null}"><%--显示用户--%>
             <ul class="layui-nav layui-layout-right">
@@ -102,23 +109,32 @@
         </div>
 
             <%--显示我的装饰列表--%>
-        <c:if test="${suits!=null}">
-        <div class="main-suit" >        <%--定位一直不对--%>
+       <%-- <c:if test="${suits!=null}">--%>
+        <div id="msuit" class="main-suit" style="display: none">
             <form action="${pageContext.request.contextPath}/user/addCollocation" method="post">
-                <table>
-                    <c:forEach items="${suits}" var="suit">
-                        <tr>
-                            <td><input name="sid" type="radio" value="${suit.sid}">${suit.sname}<br></td>
-                        </tr>
-                    </c:forEach>
-                </table>
+                <div style="padding-left: 10px">
+                    <table>
+                        <c:forEach items="${suits}" var="suit">
+                            <tr>
+                                <td>
+                                <label class="radio">
+                                    <input type="radio" name="sid" id="optionsRadios1" value="${suit.sid}">
+                                        ${suit.sname}
+                                </label>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+
                 <input type="hidden" name="fid" value="${f.fid}">
                 <input type="hidden" name="fname" value="${f.fname}">
                 <input type="hidden" name="fprice" value="${f.fprice}">
-                <button>确定</button><button onClick="window.close();">取消</button>
+                <button class="layui-btn">确定</button>
+                <button class="layui-btn">取消</button>
             </form>
         </div>
-        </c:if>
+       <%-- </c:if>--%>
 
 
 
@@ -189,106 +205,10 @@
     </div>--%>
 
 
-    <!-- 登录 -->
-    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">登录页面</h4>
-                </div>
-
-                <%--登录表单--%>
-                <div class="modal-body">
-                    <form class="modal-loginform" action="${pageContext.request.contextPath}/login" method="post">
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon2">
-                                    <span class="glyphicon glyphicon-user"></span>
-                            </span>
-                            <input name="username" type="text" required class="form-control"  placeholder="账号" aria-describedby="basic-addon2">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon3">
-                                    <span class="glyphicon glyphicon-lock"></span>
-                            </span>
-                            <input name="password" type="password" required class="form-control"  placeholder="密码" aria-describedby="basic-addon3">
-                        </div>
-                        <%--  <div class="input-group">
-                              <input type="checkbox" />记住我
-                          </div>--%>
-                        ${msg}
-                        <div class="input-group">
-                            <button type="submit" class="btn btn-primary">登陆</button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-    <!-- 注册 -->
-    <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">注册页面</h4>
-                </div>
-                <%--注册表单--%>
-                <div class="modal-body">
-                    <form class="modal-registerform" action="${pageContext.request.contextPath}/regist" method="post">
-                        <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon2">
-                                        <span class="glyphicon glyphicon-user"></span>
-                                </span>
-                            <input name="username" value="${user.username}" required type="text" class="form-control"  placeholder="账号" aria-describedby="basic-addon2">
-                        </div>
-                        <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon3">
-                                        <span class="glyphicon glyphicon-lock"></span>
-                                </span>
-                            <input name="password" value="${user.password}" required type="password" class="form-control"  placeholder="密码" aria-describedby="basic-addon3">
-                        </div>
-                        <div class="input-group">
-                                <span class="input-group-addon" id="basic-addon4">
-                                        <span class="glyphicon glyphicon-user"></span>
-                                </span>
-                            <input name="nickname" value="${user.nickname}" required type="text" class="form-control"  placeholder="昵称" aria-describedby="basic-addon4">
-                        </div>
-                        <div class="input-group">
-                                    <span class="input-group-addon" id="basic-addon5">
-                                            <span class="glyphicon glyphicon-envelope"></span>
-                                    </span>
-                            <input name="email" value="${user.email}" required type="text" class="form-control"  placeholder="邮箱" aria-describedby="basic-addon5">
-                        </div>
-                        <div class="input-group">
-                            <label for="textarea">介绍：</label><br>
-                            <textarea name="intro" value="${user.intro}" cols="36" rows="4"></textarea>
-                        </div>
-                        <div class="input-group">
-                            <label for="input">验证码：</label><br>
-                            <input type="text" name="checkcode">
-                            <img src="${pageContext.request.contextPath}/IdentifyCode" onclick="changeImage(this)" title="换一张" style="cursor:pointer">
-                            ${user.errors.checkcode}<br>
-                        </div>
-                        <div class="input-group">
-                            <button type="submit" class="btn btn-primary">注册</button>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
 </div>
 
 
 <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
-
 <script>
     //注意：导航 依赖 element 模块，否则无法进行功能性操作
     layui.use(['element', 'laypage', 'layer'], function () {
@@ -311,15 +231,9 @@
         if(${user.uid==null}){
             window.confirm("请先登录!");
         }else{
-            //查找suits   显示div
-            window.location="${pageContext.request.contextPath}/user/QuerySuit/${user.uid}"
+            //显示div
+            document.getElementById("msuit").style = "";
         }
-    }
-
-    /*全局搜索*/
-    function search() {
-        var str = document.getElementById("solrsearch").value;
-        window.location = "${pageContext.request.contextPath}/fitting/search/"+str;
     }
 
 

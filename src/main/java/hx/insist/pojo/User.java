@@ -47,6 +47,40 @@ public class User {
                 ", errors=" + errors +
                 '}';
     }
+    //修改个人信息校验
+    public boolean Verification3() {
+        boolean isOK = true;
+
+        if(!nickname.matches("^[\\u4E00-\\u9FA5A-Za-z0-9_]+$") || nickname.length()<4 || nickname.length()>16){
+            isOK = false;
+            errors.put("nickname","昵称为数字、字母、汉字或其组合，且在4-16位之间!");
+        }
+
+        return isOK;
+    }
+
+    //修改个人信息校验
+    public boolean Verification2(String password2) {
+        boolean isOK = true;
+
+        if(!nickname.matches("^[\\u4E00-\\u9FA5A-Za-z0-9_]+$") || nickname.length()<4 || nickname.length()>16){
+            isOK = false;
+            errors.put("nickname","昵称为数字、字母、汉字或其组合，且在4-16位之间!");
+        }
+
+        if(!password.matches("[0-9a-zA-Z]{6,16}")){//不为数字或字母的组合，或超出长度
+            isOK = false;
+            errors.put("password","密码为6-16位数字或字母的组合!");
+        }else {
+            if (!password.equals(password2)) {
+                isOK = false;
+                errors.put("password", "两次密码不一致!");
+            }
+        }
+
+        return isOK;
+    }
+
 
     //注册校验
      public boolean Verification(String checkcode2){

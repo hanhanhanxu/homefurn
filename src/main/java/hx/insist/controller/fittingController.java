@@ -40,8 +40,10 @@ public class fittingController {
         List listStyle = styleService.findAllStyle();
         session.setAttribute("type",listType);
         session.setAttribute("style",listStyle);
-        System.out.println(listType.size());
-        System.out.println(listStyle.size());
+
+        //将session域中的筛选信息去掉
+        session.removeAttribute("fstyle");
+        session.removeAttribute("ftype");
         return "/fitting/fittings";
     }
 

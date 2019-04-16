@@ -8,6 +8,7 @@ import hx.insist.pojo.Comment;
 import hx.insist.pojo.Suit;
 import hx.insist.pojo.User;
 import hx.insist.service.*;
+import hx.insist.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,8 @@ import java.util.List;
 @RequestMapping("/user")
 public class userController {
 
-
+    @Autowired
+    private UserService userService;
     @Autowired
     private SuitService suitService;
     @Autowired
@@ -41,6 +43,48 @@ public class userController {
     public String logoff(HttpSession session){
         session.removeAttribute("user");
         return "redirect:/fitting/index";
+    }
+
+    @RequestMapping("/info")
+    public String info(HttpSession session){
+        User user = (User) session.getAttribute("user");
+        System.out.println(user);
+        return "/WEB-INF/jsp/info.jsp";
+    }
+
+    @RequestMapping("/modifyInfo")
+    public String modifyInfo(HttpServletRequest request,User user,String password2){
+        System.out.println(user);
+        User u = (User) request.getSession().getAttribute("user");//获取session中的user
+
+        //修改nickname intro
+        if(password2==null || "".equals(password2)){
+            if(!user.Verification3()){
+                request.setAttribute("error",user.getErrors());
+                return "/WEB-INF/jsp/info.jsp";
+            }else{
+                //修改
+                u.setNickname(user.getNickname());
+                u.setIntro(user.getIntro());
+                userService.modifyByUid(u);
+            }
+        }else{//修改nickname password intro
+            if(!user.Verification2(password2)){
+                request.setAttribute("error",user.getErrors());
+                return "/WEB-INF/jsp/info.jsp";
+            }else{
+                u.setNickname(user.getNickname());
+                u.setPassword(WebUtil.md5(user.getPassword()));
+                u.setIntro(user.getIntro());
+                userService.modifyByUid(u);
+            }
+        }
+
+        System.out.println("更新之后的user:"+u);
+        //更新session中的user信息
+        request.getSession().setAttribute("user",u);
+        //修改完成回到myinfo界面
+        return "/WEB-INF/jsp/myinfo.jsp";
     }
 
     //发表评论
@@ -90,7 +134,7 @@ public class userController {
                 suitVoList.add(suitVo);
             }
         }
-        request.setAttribute("suitVoList",suitVoList);
+        request.getSession().setAttribute("suitVoList",suitVoList);
 
 
         //我的订单
@@ -112,7 +156,7 @@ public class userController {
                 suitVoListOrdered.add(suitVo);
             }
         }
-        request.setAttribute("order",suitVoListOrdered);
+        request.getSession().setAttribute("order",suitVoListOrdered);
 
         return "/WEB-INF/jsp/myinfo.jsp";
     }
@@ -165,6 +209,8 @@ public class userController {
         return "/intro.jsp";
     }
 
+
+    //通过cid删除某个装饰中的一个家居
     @RequestMapping("/delCollocation/{cid}")
     public String delCollocation(@PathVariable("cid")String cid){
         System.out.println(cid);
@@ -173,7 +219,7 @@ public class userController {
     }
 
 
-    //删除装饰中的某个家居(可多选)    删除配置表中的一条记录
+    //删除装饰中的某个家居    删除配置表中的一条记录
     @RequestMapping("/delCollocations/{cid}")
     public String delCollocations(@PathVariable("cid") String cid){
         String [] str = cid.split("&");

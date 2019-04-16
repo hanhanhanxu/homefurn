@@ -31,4 +31,14 @@ public class UserServiceImpl implements UserService {
     public int countUserByUsername(String username) {
         return userMapper.selectCountUserByUsername(username);
     }
+
+    @Override
+    public int countEmail(String email) {
+        return userMapper.selectCountEmail(email);
+    }
+
+    @Override
+    public void modifyByUid(User user) {
+        userMapper.updateByPrimaryKey(user);
+    }
 }

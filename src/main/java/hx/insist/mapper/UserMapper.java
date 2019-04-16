@@ -32,4 +32,7 @@ public interface UserMapper {
     User selectByUsernamePassword(String username,String password);
 
     int selectCountUserByUsername(String username);
+
+    int selectCountEmail(String email);
+
 }

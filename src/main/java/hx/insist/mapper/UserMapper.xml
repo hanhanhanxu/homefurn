@@ -238,4 +238,10 @@
     from USER
     where username = #{0}
   </select>
+
+  <select id="selectCountEmail" parameterType="string" resultType="int">
+    select count(email)
+    from USER
+    where email = #{0}
+  </select>
 </mapper>
