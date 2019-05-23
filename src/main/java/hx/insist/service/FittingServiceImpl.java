@@ -2,6 +2,7 @@ package hx.insist.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import hx.insist.Vo.FittingDetail;
 import hx.insist.dao.FittingDao;
 import hx.insist.mapper.FittingMapper;
 import hx.insist.pojo.Fitting;
@@ -51,7 +52,7 @@ public class FittingServiceImpl implements FittingService {
         return pageInfo;
     }
 
-    @Override
+    @Override               //solr查询   调用fittingdao
     public PageInfo<Fitting> findOverall(int currentPage, int pageSize, String str) {
         PageHelper.startPage(currentPage, pageSize);
         List list = fittingDao.queryOverall(str);
@@ -60,8 +61,9 @@ public class FittingServiceImpl implements FittingService {
     }
 
     @Override
-    public Fitting queryDetailsByFid(String fid) {
-        return fittingMapper.selectByPrimaryKey(fid);
+    public FittingDetail queryDetailsByFid(String fid) {
+        return fittingMapper.connSelectByFid(fid);
+        //return fittingMapper.selectByPrimaryKey(fid);
     }
 
     @Override
@@ -75,5 +77,29 @@ public class FittingServiceImpl implements FittingService {
         if(list.isEmpty())
             return null;
         return list;
+    }
+
+    @Override
+    public List findByFname(String fname) {
+        List list = fittingMapper.selectByFname(fname);
+        if(list.isEmpty())
+            return null;
+        return list;
+    }
+
+    @Override
+    public List findTop(int num) {
+        List list = fittingMapper.selectTop(num);
+        return list;
+    }
+
+    @Override
+    public String getFimgByFid(String fid) {
+        return fittingMapper.selectFimgByFid(fid);
+    }
+
+    @Override
+    public void xiajiaFitting(String fid) {
+        fittingMapper.updateFsignByFid(fid);
     }
 }

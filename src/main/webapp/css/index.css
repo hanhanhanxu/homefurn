@@ -37,19 +37,23 @@ a:hover{
     left: 1140px;
 }
 
-/* 中间内容区域 */
+/* 中间内容区域
+width: 130px;*/
  .layui-nav-tree {
     width: 130px;
     position: absolute;
     top: 100px;
 }
-
+/*
+width:1050px
+margin-left: 50px;
+*/
 .main-contain {
     position: absolute;
     left: 140px;
-    width: 1050px;
+    width: 70%;
     display: inline-block;
-    margin-left: 50px;
+    margin-left: 5%;
     margin-top: 5px;
 }
 
@@ -99,6 +103,8 @@ a:hover{
     left: 50%;
    margin-left: -195px;
 }
+
+
 
 /* 登录 */
 #loginModal{

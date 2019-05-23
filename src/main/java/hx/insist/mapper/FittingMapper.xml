@@ -310,7 +310,33 @@
   <select id="selectForRank" resultType="hx.insist.pojo.Fitting">
     select fid ,fname ,fprice ,fimg ,fsvolume
     from fitting
+    where fsign = 1
     order by fsvolume desc
     limit 10
   </select>
+
+  <select id="selectByFname" resultType="hx.insist.pojo.Fitting" parameterType="string">
+    select fid,fname,fprice,ftype,fstyle
+    from fitting
+    where fname like "%"#{fname}"%" and fsign = 1
+  </select>
+
+  <select id="selectTop" resultType="hx.insist.pojo.Fitting" parameterType="int">
+    select fid,fname,fprice,fimg,fsvolume
+    from fitting
+    where fsign = 1 order by fsvolume desc limit 0,#{0}
+  </select>
+
+  <select id="connSelectByFid" resultType="hx.insist.Vo.FittingDetail" parameterType="string">
+    select f.* , fs.fsnum
+    from fitting f , fitting_stock fs
+    where f.fid = fs.fid and fsign = 1
+    and f.fid = #{0}
+  </select>
+
+  <update id="updateFsignByFid" parameterType="string">
+    update fitting
+    set fsign = 0
+    where fid = #{0}
+  </update>
 </mapper>

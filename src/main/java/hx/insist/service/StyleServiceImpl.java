@@ -20,4 +20,9 @@ public class StyleServiceImpl implements StyleService {
         else
             return list;
     }
+
+    @Override
+    public void delStyleBySid(String sid) {
+        styleMapper.deleteByPrimaryKey(sid);
+    }
 }

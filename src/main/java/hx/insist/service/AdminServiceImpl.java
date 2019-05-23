@@ -1,13 +1,7 @@
 package hx.insist.service;
 
-import hx.insist.mapper.AdminMapper;
-import hx.insist.mapper.FittingMapper;
-import hx.insist.mapper.StyleMapper;
-import hx.insist.mapper.TypeMapper;
-import hx.insist.pojo.Admin;
-import hx.insist.pojo.Fitting;
-import hx.insist.pojo.Style;
-import hx.insist.pojo.Type;
+import hx.insist.mapper.*;
+import hx.insist.pojo.*;
 import hx.insist.utils.WebUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +19,8 @@ public class AdminServiceImpl implements AdminService {
     private StyleMapper styleMapper;
     @Autowired
     private FittingMapper fittingMapper;
-
+    @Autowired
+    private FittingStockMapper fittingStockMapper;
 
     @Override
     public void generateAdmin(String username,String password) {
@@ -79,10 +74,15 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void addFitting(Fitting fitting) {
+    public void addFitting(Fitting fitting,int fsnum) {
         fitting.setFid(UUID.randomUUID().toString());
         fitting.setFsvolume(0);
         fitting.setFsign(1);
         fittingMapper.insert(fitting);
+        FittingStock fittingStock = new FittingStock();
+        fittingStock.setFsid(UUID.randomUUID().toString());
+        fittingStock.setFid(fitting.getFid());
+        fittingStock.setFsnum(fsnum);
+        fittingStockMapper.insert(fittingStock);
     }
 }

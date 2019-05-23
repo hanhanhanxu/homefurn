@@ -76,6 +76,9 @@ public class LoginRegistController {
                 }else{
                     //子管界面
                     session.setAttribute("admin",admin);
+                    //清除一些缓存信息
+                    session.removeAttribute("fstyle");
+                    session.removeAttribute("ftype");
                     return "/admin/index";
                     //return "/WEB-INF/jsp/admin.jsp";
                 }

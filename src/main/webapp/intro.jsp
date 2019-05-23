@@ -101,6 +101,9 @@
             <div class="info-bottom">
                 <span>销量：</span>
                 <span class="number">${f.fsvolume}</span><br>
+                <span>库存量：</span>
+
+                <span class="number">${f.fsnum}</span><br>
                 <button onclick="islogin2('zhuangshi'); return false;" class="layui-btn" data-toggle="modal" data-target="#modal">加入我的装饰</button>
                 <%--<form action="${pageContext.request.contextPath}/user/QuerySuit/${user.uid}">
                     <button type="submit" onclick="islogin(); return false;" class="layui-btn" data-toggle="modal" data-target="#modal">加入我的装饰</button>
@@ -131,7 +134,7 @@
                 <input type="hidden" name="fname" value="${f.fname}">
                 <input type="hidden" name="fprice" value="${f.fprice}">
                 <button class="layui-btn">确定</button>
-                <button class="layui-btn">取消</button>
+                <button class="layui-btn" onclick="yincang(); return false;">取消</button>
             </form>
         </div>
        <%-- </c:if>--%>
@@ -173,38 +176,6 @@
 
     </div>
 
-
-    <%--点击 加入我的装饰--%>
-    <%--<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">装饰列表</h4>
-                </div>
-                <div class="modal-body">
-                    <ul>
-                        <form action="${pageContext.request.contextPath}/user/addCollocation" method="post">
-                            <c:forEach items="${suits}" var="suit">
-                                <li>
-                                    <span><input name="sid" type="radio" value="${suit.sid}">${suit.sname}</span>
-                                </li>
-                            </c:forEach>
-                                <input type="hidden" name="fid" value="${f.fid}">
-                                <input type="hidden" name="fname" value="${f.fname}">
-                                <input type="hidden" name="fprice" value="${f.fprice}">
-                                <button>确定</button><button>取消</button>
-                         </form>
-                    </ul>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                </div>
-            </div>
-        </div>
-    </div>--%>
-
-
 </div>
 
 
@@ -220,7 +191,7 @@
     /*点击评论按钮触发，检查是否已登录*/
         function islogin(){
             if(${user.uid==null}){
-                window.confirm("请先登录!");
+                alert("请先登录!");
             }else{
                 document.getElementById("form1").onsubmit();//继续提交
             }
@@ -229,11 +200,19 @@
         /*点击加入我的装饰时触发，检查是否已登录。是，则查询带用户的装饰*/
     function islogin2(id){
         if(${user.uid==null}){
-            window.confirm("请先登录!");
+            alert("请先登录!");
         }else{
-            //显示div
-            document.getElementById("msuit").style = "";
+            if(${suits!=null}){
+                //显示div
+                document.getElementById("msuit").style.display = "";
+            }else{
+                alert("请先创建装饰")
+            }
         }
+    }
+    /*点击取消隐藏div*/
+    function yincang() {
+        document.getElementById("msuit").style.display = "none";
     }
 
 

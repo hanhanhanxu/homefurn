@@ -2,12 +2,9 @@ package hx.insist.controller;
 
 import com.github.pagehelper.PageInfo;
 import hx.insist.Vo.CommentVo;
-import hx.insist.pojo.Comment;
-import hx.insist.pojo.Fitting;
-import hx.insist.service.CommentService;
-import hx.insist.service.FittingService;
-import hx.insist.service.StyleService;
-import hx.insist.service.TypeService;
+import hx.insist.Vo.FittingDetail;
+import hx.insist.pojo.*;
+import hx.insist.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,10 +29,14 @@ public class fittingController {
     private TypeService typeService;
     @Autowired
     private StyleService styleService;
+    @Autowired
+    private LunboService lunboService;
+    @Autowired
+    private SuitService suitService;
 
-    @RequestMapping("/index")//加载 种类、风格 信息
+    @RequestMapping("/index")//加载首页  种类、风格 信息
     public String index(HttpSession session){
-        System.out.println("/user/index：加载种类、风格信息");
+        //加载种类、风格信息
         List listType = typeService.findAllType();
         List listStyle = styleService.findAllStyle();
         session.setAttribute("type",listType);
@@ -44,9 +45,20 @@ public class fittingController {
         //将session域中的筛选信息去掉
         session.removeAttribute("fstyle");
         session.removeAttribute("ftype");
+
+        //加载轮播图
+        List<Lunbo> lunbopics = lunboService.selectAll();
+        session.setAttribute("lunbopics",lunbopics);
+
+        //加载热销榜
+        List<Fitting> list3 = fittingService.findTop(3);
+        session.setAttribute("topfittings",list3);
+
+        //加载家居
         return "/fitting/fittings";
     }
 
+    //查询
     @RequestMapping("/search/{str}")
     public String search(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
                          @RequestParam(required = false, defaultValue = "10") Integer PageSize,
@@ -60,19 +72,19 @@ public class fittingController {
         //String str = (String) request.getAttribute("str");
         System.out.println("str:"+str);
         if(str.length()!=0){
-            System.out.println("第一条了");
+            System.out.println("search查询if语句");
             PageInfo pageInfo = fittingService.findOverall(pageNum,PageSize,str);
             session.setAttribute("pageInfo",pageInfo);
             return "/menu.jsp";
         }else {
-            System.out.println("第二条了");
+            System.out.println("search查询else语句，查询条件为空");
             return "/fitting/index";
         }
     }
 
 
     //加载家居
-    //分页展示
+    //分页展示  首页加载
     @RequestMapping("/fittings")//findAll    pageNum当前页   PageSize页的大小
     public String fittings(@RequestParam(required = false, defaultValue = "1") Integer pageNum,
                            @RequestParam(required = false, defaultValue = "10") Integer PageSize,
@@ -117,13 +129,13 @@ public class fittingController {
         }
 
         if(session.getAttribute("admin")!=null){
-            return "/WEB-INF/jsp/admin.jsp";//列表页面
+            return "/WEB-INF/jsp/adminmenu.jsp";//列表页面
         }else {
             return "/menu.jsp";//列表页面
         }
     }
 
-    //分页展示
+    //分页展示  跳转页面
     @RequestMapping("/fittings/{pageNum}")//findAll加第几页    pageNum当前页   PageSize页的大小
     public String fittingspage(@PathVariable("pageNum") Integer pageNum,
                                @RequestParam(required = false, defaultValue = "10") Integer PageSize,
@@ -168,13 +180,13 @@ public class fittingController {
         }
 
         if(session.getAttribute("admin")!=null){
-            return "/WEB-INF/jsp/admin.jsp";//列表页面
+            return "/WEB-INF/jsp/adminmenu.jsp";//列表页面
         }else {
             return "/menu.jsp";//列表页面
         }
     }
 
-    //储存条件筛选 信息
+    //储存条件筛选 信息     弃用
     @RequestMapping("/select")//findAll    pageNum当前页   PageSize页的大小
     public String select(HttpSession session,
                          String fstyle,String ftype) {
@@ -210,11 +222,12 @@ public class fittingController {
     //进入某个家居的详情界面
     @RequestMapping("/details/{fid}")
     public String details(@PathVariable("fid") String fid,
+                          HttpServletRequest request,
                           HttpSession session){
         //通过fid查询家居详情
-        Fitting fitting = fittingService.queryDetailsByFid(fid);
-        System.out.println(fitting);
-        session.setAttribute("f",fitting);
+        FittingDetail fittingDetail = fittingService.queryDetailsByFid(fid);
+        System.out.println(fittingDetail);
+        session.setAttribute("f",fittingDetail);
 
         //通过fid查询此家居的评论信息
         List<Comment> list = commentService.findAllByFid(fid);
@@ -231,6 +244,15 @@ public class fittingController {
             }
         }
         session.setAttribute("comments",listVo);
+
+        User u = (User) session.getAttribute("user");
+        if(u!=null){
+            String uid = u.getUid();
+            List<Suit> list2 = suitService.QueryAllByUid(uid);
+            request.getSession().setAttribute("suits",list2);//sid uid sname
+        }
+
+        //return "/user/QuerySuit";
         return "/intro.jsp";
     }
 

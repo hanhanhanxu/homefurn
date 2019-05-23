@@ -17,7 +17,10 @@ public class SuitServiceImpl implements SuitService {
 
     @Override
     public List QueryAllByUid(String uid) {
-        return suitMapper.findAllByUid(uid);
+        List list = suitMapper.findAllByUid(uid);
+        if(list==null || list.isEmpty())
+            return null;
+        return list;
     }
 
     @Override
