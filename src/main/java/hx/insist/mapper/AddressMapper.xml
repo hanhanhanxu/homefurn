@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hx.insist.mapper.AddressMapper" >
+  <resultMap id="BaseResultMap" type="hx.insist.pojo.Address" >
+    <result column="RID" property="rid" jdbcType="VARCHAR" />
+    <result column="uid" property="uid" jdbcType="VARCHAR" />
+    <result column="RNAME" property="rname" jdbcType="VARCHAR" />
+    <result column="RTEL" property="rtel" jdbcType="VARCHAR" />
+    <result column="RPRO" property="rpro" jdbcType="VARCHAR" />
+    <result column="RCITY" property="rcity" jdbcType="VARCHAR" />
+    <result column="RAREA" property="rarea" jdbcType="VARCHAR" />
+    <result column="RINFO" property="rinfo" jdbcType="VARCHAR" />
+    <result column="RMO" property="rmo" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    RID, uid, RNAME, RTEL, RPRO, RCITY, RAREA, RINFO, RMO
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="hx.insist.pojo.AddressExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="hx.insist.pojo.AddressExample" >
+    delete from address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="hx.insist.pojo.Address" >
+    insert into address (RID, uid, RNAME, 
+      RTEL, RPRO, RCITY, 
+      RAREA, RINFO, RMO)
+    values (#{rid,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, #{rname,jdbcType=VARCHAR}, 
+      #{rtel,jdbcType=VARCHAR}, #{rpro,jdbcType=VARCHAR}, #{rcity,jdbcType=VARCHAR}, 
+      #{rarea,jdbcType=VARCHAR}, #{rinfo,jdbcType=VARCHAR}, #{rmo,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="hx.insist.pojo.Address" >
+    insert into address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        RID,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="rname != null" >
+        RNAME,
+      </if>
+      <if test="rtel != null" >
+        RTEL,
+      </if>
+      <if test="rpro != null" >
+        RPRO,
+      </if>
+      <if test="rcity != null" >
+        RCITY,
+      </if>
+      <if test="rarea != null" >
+        RAREA,
+      </if>
+      <if test="rinfo != null" >
+        RINFO,
+      </if>
+      <if test="rmo != null" >
+        RMO,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="rid != null" >
+        #{rid,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="rname != null" >
+        #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="rtel != null" >
+        #{rtel,jdbcType=VARCHAR},
+      </if>
+      <if test="rpro != null" >
+        #{rpro,jdbcType=VARCHAR},
+      </if>
+      <if test="rcity != null" >
+        #{rcity,jdbcType=VARCHAR},
+      </if>
+      <if test="rarea != null" >
+        #{rarea,jdbcType=VARCHAR},
+      </if>
+      <if test="rinfo != null" >
+        #{rinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="rmo != null" >
+        #{rmo,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="hx.insist.pojo.AddressExample" resultType="java.lang.Integer" >
+    select count(*) from address
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update address
+    <set >
+      <if test="record.rid != null" >
+        RID = #{record.rid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rname != null" >
+        RNAME = #{record.rname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rtel != null" >
+        RTEL = #{record.rtel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rpro != null" >
+        RPRO = #{record.rpro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rcity != null" >
+        RCITY = #{record.rcity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rarea != null" >
+        RAREA = #{record.rarea,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rinfo != null" >
+        RINFO = #{record.rinfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rmo != null" >
+        RMO = #{record.rmo,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update address
+    set RID = #{record.rid,jdbcType=VARCHAR},
+      uid = #{record.uid,jdbcType=VARCHAR},
+      RNAME = #{record.rname,jdbcType=VARCHAR},
+      RTEL = #{record.rtel,jdbcType=VARCHAR},
+      RPRO = #{record.rpro,jdbcType=VARCHAR},
+      RCITY = #{record.rcity,jdbcType=VARCHAR},
+      RAREA = #{record.rarea,jdbcType=VARCHAR},
+      RINFO = #{record.rinfo,jdbcType=VARCHAR},
+      RMO = #{record.rmo,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+
+  <select id="selectAllByUid" parameterType="string" resultType="hx.insist.pojo.Address">
+    select *
+    from address
+    where uid = #{0} order by rmo desc
+  </select>
+  <select id="selectMo" resultType="string">
+    select rid
+    from address
+    where uid=#{0} and rmo = 1
+  </select>
+  <update id="set0Mo" parameterType="string">
+    update address
+    set rmo = 0
+    where rid = #{0}
+  </update>
+  <delete id="deleteByRid" parameterType="string">
+    delete from address
+    where rid = #{0}
+  </delete>
+  <select id="queryMo" parameterType="string" resultType="string">
+    select rmo
+    from address
+    where rid = #{0}
+  </select>
+  <select id="selectOtherByUid" parameterType="string" resultType="hx.insist.pojo.Address">
+    select *
+    from address
+    where uid = #{0} and rid != #{1}
+    order by rmo
+    limit 0,1
+  </select>
+  <update id="set1Mo" parameterType="string">
+    update address
+    set rmo = 1
+    where rid = #{0}
+  </update>
+  <select id="selectCountMo" parameterType="string" resultType="int">
+    select count(rid)
+    from address
+    where uid = #{0} and rmo = 1
+  </select>
+  <select id="selectMoAddress" parameterType="string" resultType="hx.insist.pojo.Address">
+    select *
+    from address
+    where uid=#{0} and rmo = 1
+  </select>
+</mapper>

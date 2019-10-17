@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hx.insist.mapper.FittingStockMapper" >
+  <resultMap id="BaseResultMap" type="hx.insist.pojo.FittingStock" >
+    <result column="FSID" property="fsid" jdbcType="VARCHAR" />
+    <result column="FID" property="fid" jdbcType="VARCHAR" />
+    <result column="FSNUM" property="fsnum" jdbcType="INTEGER" />
+    <result column="FNAME" property="fname" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    FSID, FID, FSNUM, FNAME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="hx.insist.pojo.FittingStockExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from fitting_stock
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="hx.insist.pojo.FittingStockExample" >
+    delete from fitting_stock
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="hx.insist.pojo.FittingStock" >
+    insert into fitting_stock (FSID, FID, FSNUM, 
+      FNAME)
+    values (#{fsid,jdbcType=VARCHAR}, #{fid,jdbcType=VARCHAR}, #{fsnum,jdbcType=INTEGER}, 
+      #{fname,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="hx.insist.pojo.FittingStock" >
+    insert into fitting_stock
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="fsid != null" >
+        FSID,
+      </if>
+      <if test="fid != null" >
+        FID,
+      </if>
+      <if test="fsnum != null" >
+        FSNUM,
+      </if>
+      <if test="fname != null" >
+        FNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="fsid != null" >
+        #{fsid,jdbcType=VARCHAR},
+      </if>
+      <if test="fid != null" >
+        #{fid,jdbcType=VARCHAR},
+      </if>
+      <if test="fsnum != null" >
+        #{fsnum,jdbcType=INTEGER},
+      </if>
+      <if test="fname != null" >
+        #{fname,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="hx.insist.pojo.FittingStockExample" resultType="java.lang.Integer" >
+    select count(*) from fitting_stock
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update fitting_stock
+    <set >
+      <if test="record.fsid != null" >
+        FSID = #{record.fsid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fid != null" >
+        FID = #{record.fid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fsnum != null" >
+        FSNUM = #{record.fsnum,jdbcType=INTEGER},
+      </if>
+      <if test="record.fname != null" >
+        FNAME = #{record.fname,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update fitting_stock
+    set FSID = #{record.fsid,jdbcType=VARCHAR},
+      FID = #{record.fid,jdbcType=VARCHAR},
+      FSNUM = #{record.fsnum,jdbcType=INTEGER},
+      FNAME = #{record.fname,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateFsnumByFid" parameterType="string">
+    update fitting_stock
+    set fsnum = fsnum-1
+    where fid = #{0} and fsnum > 0
+  </update>
+</mapper>

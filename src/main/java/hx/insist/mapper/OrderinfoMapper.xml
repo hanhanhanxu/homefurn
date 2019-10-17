@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="hx.insist.mapper.OrderinfoMapper" >
+  <resultMap id="BaseResultMap" type="hx.insist.pojo.Orderinfo" >
+    <id column="OFID" property="ofid" jdbcType="VARCHAR" />
+    <result column="OFSERIAL" property="ofserial" jdbcType="VARCHAR" />
+    <result column="UID" property="uid" jdbcType="VARCHAR" />
+    <result column="RID" property="rid" jdbcType="VARCHAR" />
+    <result column="RNAME" property="rname" jdbcType="VARCHAR" />
+    <result column="RTEL" property="rtel" jdbcType="VARCHAR" />
+    <result column="OFADDRESS" property="ofaddress" jdbcType="VARCHAR" />
+    <result column="OFPRICE" property="ofprice" jdbcType="DECIMAL" />
+    <result column="OFTIME" property="oftime" jdbcType="TIMESTAMP" />
+    <result column="OFSTATE" property="ofstate" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    OFID, OFSERIAL, UID, RID, RNAME, RTEL, OFADDRESS, OFPRICE, OFTIME, OFSTATE
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="hx.insist.pojo.OrderinfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from orderinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from orderinfo
+    where OFID = #{ofid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from orderinfo
+    where OFID = #{ofid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="hx.insist.pojo.OrderinfoExample" >
+    delete from orderinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="hx.insist.pojo.Orderinfo" >
+    insert into orderinfo (OFID, OFSERIAL, UID, 
+      RID, RNAME, RTEL, OFADDRESS, 
+      OFPRICE, OFTIME, OFSTATE
+      )
+    values (#{ofid,jdbcType=VARCHAR}, #{ofserial,jdbcType=VARCHAR}, #{uid,jdbcType=VARCHAR}, 
+      #{rid,jdbcType=VARCHAR}, #{rname,jdbcType=VARCHAR}, #{rtel,jdbcType=VARCHAR}, #{ofaddress,jdbcType=VARCHAR}, 
+      #{ofprice,jdbcType=DECIMAL}, #{oftime,jdbcType=TIMESTAMP}, #{ofstate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="hx.insist.pojo.Orderinfo" >
+    insert into orderinfo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ofid != null" >
+        OFID,
+      </if>
+      <if test="ofserial != null" >
+        OFSERIAL,
+      </if>
+      <if test="uid != null" >
+        UID,
+      </if>
+      <if test="rid != null" >
+        RID,
+      </if>
+      <if test="rname != null" >
+        RNAME,
+      </if>
+      <if test="rtel != null" >
+        RTEL,
+      </if>
+      <if test="ofaddress != null" >
+        OFADDRESS,
+      </if>
+      <if test="ofprice != null" >
+        OFPRICE,
+      </if>
+      <if test="oftime != null" >
+        OFTIME,
+      </if>
+      <if test="ofstate != null" >
+        OFSTATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ofid != null" >
+        #{ofid,jdbcType=VARCHAR},
+      </if>
+      <if test="ofserial != null" >
+        #{ofserial,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="rid != null" >
+        #{rid,jdbcType=VARCHAR},
+      </if>
+      <if test="rname != null" >
+        #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="rtel != null" >
+        #{rtel,jdbcType=VARCHAR},
+      </if>
+      <if test="ofaddress != null" >
+        #{ofaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ofprice != null" >
+        #{ofprice,jdbcType=DECIMAL},
+      </if>
+      <if test="oftime != null" >
+        #{oftime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ofstate != null" >
+        #{ofstate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="hx.insist.pojo.OrderinfoExample" resultType="java.lang.Integer" >
+    select count(*) from orderinfo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update orderinfo
+    <set >
+      <if test="record.ofid != null" >
+        OFID = #{record.ofid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ofserial != null" >
+        OFSERIAL = #{record.ofserial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uid != null" >
+        UID = #{record.uid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rid != null" >
+        RID = #{record.rid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rname != null" >
+        RNAME = #{record.rname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rtel != null" >
+        RTEL = #{record.rtel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ofaddress != null" >
+        OFADDRESS = #{record.ofaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ofprice != null" >
+        OFPRICE = #{record.ofprice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.oftime != null" >
+        OFTIME = #{record.oftime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.ofstate != null" >
+        OFSTATE = #{record.ofstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update orderinfo
+    set OFID = #{record.ofid,jdbcType=VARCHAR},
+      OFSERIAL = #{record.ofserial,jdbcType=VARCHAR},
+      UID = #{record.uid,jdbcType=VARCHAR},
+      RID = #{record.rid,jdbcType=VARCHAR},
+      RNAME = #{record.rname,jdbcType=VARCHAR},
+      RTEL = #{record.rtel,jdbcType=VARCHAR},
+      OFADDRESS = #{record.ofaddress,jdbcType=VARCHAR},
+      OFPRICE = #{record.ofprice,jdbcType=DECIMAL},
+      OFTIME = #{record.oftime,jdbcType=TIMESTAMP},
+      OFSTATE = #{record.ofstate,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="hx.insist.pojo.Orderinfo" >
+    update orderinfo
+    <set >
+      <if test="ofserial != null" >
+        OFSERIAL = #{ofserial,jdbcType=VARCHAR},
+      </if>
+      <if test="uid != null" >
+        UID = #{uid,jdbcType=VARCHAR},
+      </if>
+      <if test="rid != null" >
+        RID = #{rid,jdbcType=VARCHAR},
+      </if>
+      <if test="rname != null" >
+        RNAME = #{rname,jdbcType=VARCHAR},
+      </if>
+      <if test="rtel != null" >
+        RTEL = #{rtel,jdbcType=VARCHAR},
+      </if>
+      <if test="ofaddress != null" >
+        OFADDRESS = #{ofaddress,jdbcType=VARCHAR},
+      </if>
+      <if test="ofprice != null" >
+        OFPRICE = #{ofprice,jdbcType=DECIMAL},
+      </if>
+      <if test="oftime != null" >
+        OFTIME = #{oftime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="ofstate != null" >
+        OFSTATE = #{ofstate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where OFID = #{ofid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="hx.insist.pojo.Orderinfo" >
+    update orderinfo
+    set OFSERIAL = #{ofserial,jdbcType=VARCHAR},
+      UID = #{uid,jdbcType=VARCHAR},
+      RID = #{rid,jdbcType=VARCHAR},
+      RNAME = #{rname,jdbcType=VARCHAR},
+      RTEL = #{rtel,jdbcType=VARCHAR},
+      OFADDRESS = #{ofaddress,jdbcType=VARCHAR},
+      OFPRICE = #{ofprice,jdbcType=DECIMAL},
+      OFTIME = #{oftime,jdbcType=TIMESTAMP},
+      OFSTATE = #{ofstate,jdbcType=VARCHAR}
+    where OFID = #{ofid,jdbcType=VARCHAR}
+  </update>
+
+  <select id="selectAllByUid" parameterType="string" resultType="hx.insist.pojo.Orderinfo">
+    select *
+    from orderinfo
+    where uid = #{0}
+    order by oftime desc
+  </select>
+  <select id="selectAllByUidAndOfstate" parameterType="string" resultType="hx.insist.pojo.Orderinfo">
+    select *
+    from orderinfo
+    where uid = #{0} and ofstate = #{1}
+    order by oftime desc
+  </select>
+  <select id="selectAll" resultType="hx.insist.pojo.Orderinfo">
+    select *
+    from `orderinfo`
+    ORDER BY oftime desc
+  </select>
+  <select id="selectAllByOfstate" resultType="hx.insist.pojo.Orderinfo">
+    select *
+    from `orderinfo`
+    where ofstate = #{0}
+    order by oftime DESC
+  </select>
+  <update id="updateOfstate1ByOfid" parameterType="string">
+    update orderinfo
+    set ofstate = "已发货"
+    where ofid = #{0} and ofstate = "待发货"
+  </update>
+  <update id="updateOfstate2ByOfid" parameterType="string">
+    update orderinfo
+    set ofstate = "已收货"
+    where ofid = #{0} and ofstate = "已发货"
+  </update>
+</mapper>
