@@ -1,5 +1,6 @@
 package hx.insist.mapper;
 
+import hx.insist.Vo.FittingDetail;
 import hx.insist.pojo.Fitting;
 import hx.insist.pojo.FittingExample;
 import org.apache.ibatis.annotations.Param;
@@ -42,4 +43,12 @@ public interface FittingMapper {
     int updateFsvolumeBySid(String fid);
 
     List selectForRank();
+
+    List selectByFname(String fname);
+
+    List selectTop(int num);
+
+    FittingDetail connSelectByFid(String fid);
+
+    int updateFsignByFid(String fid);
 }

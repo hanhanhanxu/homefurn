@@ -25,7 +25,7 @@ public class MyInterceptor implements HandlerInterceptor {
                 if(session.getAttribute("user")!=null){
                     return true;
                 }else{
-                    request.getRequestDispatcher("/user/index").forward(request,response);
+                    request.getRequestDispatcher("/fitting/index").forward(request,response);
                     return false;
                 }
             }
@@ -35,7 +35,7 @@ public class MyInterceptor implements HandlerInterceptor {
             if(session.getAttribute("admin")!=null){
                 return true;
             }else{
-                request.getRequestDispatcher("/user/index").forward(request,response);
+                request.getRequestDispatcher("/fitting/index").forward(request,response);
                 return false;
             }
         }
@@ -44,7 +44,7 @@ public class MyInterceptor implements HandlerInterceptor {
             if(session.getAttribute("superadmin")!=null){
                 return true;
             }else{
-                request.getRequestDispatcher("/user/index").forward(request,response);
+                request.getRequestDispatcher("/fitting/index").forward(request,response);
                 return false;
             }
         }

@@ -20,4 +20,9 @@ public class TypeServiceImpl implements TypeService {
         else
             return list;
     }
+
+    @Override
+    public void delTypeByTid(String tid) {
+        typeMapper.deleteByPrimaryKey(tid);
+    }
 }

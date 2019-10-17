@@ -11,6 +11,6 @@ public interface AdminService {
     int addType(String typeName);
     int addStyle(String styleName);
 
-    void addFitting(Fitting fitting);
+    void addFitting(Fitting fitting,int fsnum);
 
 }

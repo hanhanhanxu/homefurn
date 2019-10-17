@@ -17,108 +17,6 @@
     <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css">
-   <%-- <style type="text/css">
-        .Content-Main{
-            max-width: 500px;
-            margin: auto;
-            border: none;
-            border-radius: 5px;
-            -moz-border-radius: 5px;
-            -webkit-border-radius: 5px;
-            font: 12px "Helvetica Neue", Helvetica, Arial, sans-serif;
-            text-shadow: 1px 1px 1px #444;
-            color: #D3D3D3;
-            background: #555;
-        }
-        .Content-Main h1{
-            padding: 8px 0px 40px 10px;
-            display: block;
-            border-bottom: 1px solid #444;
-        }
-        .text1{
-            margin-left: 3px;
-        }
-        .Content-Main label{
-            margin: 0px 0px 5px;
-            display: block;
-        }
-        .fileInputContainer{
-            height: 99px;
-            width: 99px;
-            margin: 20px 20px 20px 20px ;
-            border: none;
-            background: url("img/Example.jpg");
-            overflow: hidden;
-            position: relative;
-        }
-        .fileInput{
-            height: 106px;
-            border: none;
-            font-size: 300px;
-            opacity: 0;
-            filter:alpha(opacity=0);
-            cursor: pointer;
-            position: absolute;
-        }
-        .Content-Main label>span{
-            width: 20%;
-            float: left;
-            text-align: right;
-            padding-right: 10px;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        .Main-sex{
-            padding-right: 13px;
-            padding-bottom: 13px;
-            font-weight: bold;
-            line-height: 4px;
-        }
-        .Main-sex input[type=checkbox]{
-            margin-top:6px;
-            vertical-align:middle;
-        }
-        .Content-Main input[type="text"],.Content-Main input[type="email"],.Content-Main textarea{
-            height: 25px;
-            width: 70%;
-            line-height: 15px;
-            padding: 5px 0px 5px 5px;
-            margin-bottom: 16px;
-            margin-right: 6px;
-            margin-top: 2px;
-            border: none;
-            border-radius:2px;
-            -webkit-border-radius:2px;
-            -moz-border-radius:2px;
-            outline: 0 none;
-            background:  #DFDFDF;
-            color: #525252;
-        }
-        .Content-Main textarea{
-            height: 100px;
-            width: 70%;
-            padding: 5px 0px 0px 5px;
-        }
-        .Content-Main .button{
-            padding: 8px 24px 8px 24px;
-            margin-bottom: 8px;
-            border: none;
-            border-radius: 4px;
-            -moz-border-radius: 4px;
-            -webkit-border-radius: 4px;
-            font-weight: bold;
-            text-shadow: 1px 1px 1px #FFE477;
-            box-shadow: 1px 1px 1px  #3D3D3D;
-            -moz-box-shadow: 1px 1px 1px  #3D3D3D;
-            -webkit-box-shadow: 1px 1px 1px  #3D3D3D;
-            color: #585858;
-            background: #f6ff0a;
-        }
-        .Content-Main .button:hover{
-            color:  #333;
-            background-color:  #EBEBEB ;
-        }
-    </style>--%>
 
     <style>
         .info{
@@ -136,12 +34,7 @@
         <div class="layui-logo"><a href="${pageContext.request.contextPath}/fitting/index">家居装饰中心</a></div>
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
-                <a href="javascript:;">
-                    ${user.nickname}
-                </a>
-                <dl class="layui-nav-child">
-                    <dd><a href="${pageContext.request.contextPath}/user/myinfo">个人中心</a></dd>
-                </dl>
+                <a href="${pageContext.request.contextPath}/user/myinfo">个人中心</a>
             </li>
             <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/user/logoff">退出</a></li>
         </ul>
@@ -201,43 +94,6 @@
 
     </div>
 
-
-    <%--<div class="Content-Main">
-        <form id="form1"  action="${pageContext.request.contextPath}/user/modifyInfo" method="post" class="form-userInfo">
-            <h1>修改个人信息</h1>
-            <label>
-                <span>昵称:</span>
-                <input type="text"  name="nickname" value="${user.nickname}" required>
-                ${error.nickname}
-            </label>
-            <label>
-                <span>登录账号:</span>
-                <input type="text"  name="username" placeholder="${user.username} 不可修改" readonly>
-            </label>
-            <label>
-                <span>邮箱:</span>
-                <input id="email" type="email" name="email" placeholder="正确填写email才能修改密码">
-                ${error.email}
-            </label>
-            <label>
-                <span>新密码:</span>
-                <input id="password" type="text"  name="password" placeholder="两次密码输入需一致">
-                <br>${error.password}
-            </label>
-            <label>
-                <span>确认新密码:</span>
-                <input id="password2" type="text"  name="password2" placeholder="两次密码输入需一致">
-            </label>
-            <label>
-                <span>简介:</span>
-                <textarea id="message" name="intro">${user.intro}</textarea>
-            </label>
-            <label>
-                <button class="button"  onclick="check('${user.email}'); return false;" >提交</button>
-            </label>
-        </form>
-    </div>--%>
-
 </div>
 
 <script>
@@ -248,7 +104,12 @@
 
         //密码为空  不修改密码，修改nickname和intro
         if((password=="" && password2=="") ){
-            document.getElementById("form1").onsubmit();//继续提交
+            var m = document.getElementById("message").value;
+            if(m.length>128){
+                alert("简介过长，请修改")
+            }else{
+                document.getElementById("form1").onsubmit();//继续提交
+            }
         }else{//密码不全为空，修改nickname,password,intro
             if(email==email2){
                 if(password==password2){

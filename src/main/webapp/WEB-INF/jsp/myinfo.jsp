@@ -36,6 +36,7 @@
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="${pageContext.request.contextPath}/user/info">修改信息</a></dd>
+                    <dd><a href="${pageContext.request.contextPath}/user/address">收货地址</a></dd>
                 </dl>
             </li>
             <li class="layui-nav-item"><a href="${pageContext.request.contextPath}/user/logoff">退出</a></li>
@@ -52,7 +53,7 @@
             </ul>
         </div>
         <div class="right">
-            <h5>我的装饰：</h5>
+            <h3>我的装饰：</h3>
             <c:forEach items="${suitVoList}" var="suitVo">
             <div class="main-item">
                     ${suitVo.sname}
@@ -80,39 +81,209 @@
                             <button type="submit">删除</button>
                         </form>
                         <br><br><br>
-                        <form action="${pageContext.request.contextPath}/user/orderSuit" method="post">
+                        <form id="dinggouform" action="${pageContext.request.contextPath}/user/orderSuit" method="post">
                             <input hidden name="sid" value="${suitVo.sid}">
-                            <button type="submit">订购</button>
+                            <button onclick="checkMo(); return false;" type="submit">订购</button>
                         </form>
                     </li>
                 </ul>
             </div>
             </c:forEach>
+            <br><br>
+            <br><br>
 
-            <h5>我的订单:</h5>
-            <c:forEach items="${order}" var="suitVoOrdered">
-            <div class="main-item">
-                    ${suitVoOrdered.sname}:
-                <ul>
-                    <li >
-                         ${suitVoOrdered.sprice}￥
-                    </li>
-                    <li></li>
-                    <c:forEach items="${suitVoOrdered.collocations}" var="collocationOrdered">
-                    <li>
-                        <div class="main-item-img">
-                            <img style="height: 80px;width: 80px" src="${pageContext.request.contextPath}/coverimg/${collocationOrdered.fimg}" alt="" />
-                            <span>${collocationOrdered.fname}</span>
-                            <span>${collocationOrdered.fprice}</span>
-                            <div class="mask" onclick="fittingdetails('${collocationOrdered.fid}')">
-                                <span class="glyphicon glyphicon-option-horizontal"></span>
-                            </div>
-                        </div>
-                    </li>
-                    </c:forEach>
-                </ul>
-            </div>
+            <h3>我的订单:</h3>
+            <h5>1、待发货订单:</h5>
+            <c:forEach items="${order}" var="orderinfoVo">
+                <table class="layui-table" lay-even="" lay-skin="row">
+                    <colgroup>
+                        <col width="150">
+                        <col width="150">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>收货人</th>
+                        <th>${orderinfoVo.orderinfo.rname}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>电话</td>
+                        <td>${orderinfoVo.orderinfo.rtel}</td>
+                    </tr>
+                    <tr>
+                        <td>收货地址</td>
+                        <td>${orderinfoVo.orderinfo.ofaddress}</td>
+                    </tr>
+                    <tr>
+                        <td>￥</td>
+                        <td>${orderinfoVo.orderinfo.ofprice}</td>
+                    </tr>
+                    <tr>
+                        <td>下单时间</td>
+                        <td>${orderinfoVo.orderinfo.stroftime}</td>
+                    </tr>
+                    <tr>
+                        <td>状态</td>
+                        <td>${orderinfoVo.orderinfo.ofstate}</td>
+                    </tr>
+                    <tr>
+                        <td>订单号</td>
+                        <td>${orderinfoVo.orderinfo.ofserial}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="main-item">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <c:forEach items="${orderinfoVo.orderitemsVoList}" var="OrderitemsVo">
+                            <li>
+                                <div class="main-item-img">
+                                    <img style="height: 80px;width: 80px" src="${pageContext.request.contextPath}/coverimg/${OrderitemsVo.fimg}" alt="" />
+                                    <span>${OrderitemsVo.orderitems.fname}</span>
+                                    <span>${OrderitemsVo.orderitems.fprice}</span>
+                                    <div class="mask" onclick="fittingdetails('${OrderitemsVo.orderitems.fid}')">
+                                        <span class="glyphicon glyphicon-option-horizontal"></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
             </c:forEach>
+            <br><br>
+
+            <h5>2、待收货订单:</h5>
+            <c:forEach items="${order2}" var="orderinfoVo">
+                <table class="layui-table" lay-even="" lay-skin="row">
+                    <colgroup>
+                        <col width="150">
+                        <col width="150">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>收货人</th>
+                        <th>${orderinfoVo.orderinfo.rname}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>电话</td>
+                        <td>${orderinfoVo.orderinfo.rtel}</td>
+                    </tr>
+                    <tr>
+                        <td>收货地址</td>
+                        <td>${orderinfoVo.orderinfo.ofaddress}</td>
+                    </tr>
+                    <tr>
+                        <td>￥</td>
+                        <td>${orderinfoVo.orderinfo.ofprice}</td>
+                    </tr>
+                    <tr>
+                        <td>下单时间</td>
+                        <td>${orderinfoVo.orderinfo.stroftime}</td>
+                    </tr>
+                    <tr>
+                        <td>状态</td>
+                        <td>${orderinfoVo.orderinfo.ofstate}</td>
+                    </tr>
+                    <tr>
+                        <td>订单号</td>
+                        <td>${orderinfoVo.orderinfo.ofserial}</td>
+                    </tr>
+                    <tr>
+                        <td>操作</td>
+                        <td>
+                            <form action="${pageContext.request.contextPath}/user/receiveGoods" method="post">
+                                <input type="hidden" name="ofid" value="${orderinfoVo.orderinfo.ofid}">
+                                <button>确认收货</button>
+                            </form>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="main-item">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <c:forEach items="${orderinfoVo.orderitemsVoList}" var="OrderitemsVo">
+                            <li>
+                                <div class="main-item-img">
+                                    <img style="height: 80px;width: 80px" src="${pageContext.request.contextPath}/coverimg/${OrderitemsVo.fimg}" alt="" />
+                                    <span>${OrderitemsVo.orderitems.fname}</span>
+                                    <span>${OrderitemsVo.orderitems.fprice}</span>
+                                    <div class="mask" onclick="fittingdetails('${OrderitemsVo.orderitems.fid}')">
+                                        <span class="glyphicon glyphicon-option-horizontal"></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </c:forEach>
+            <br><br>
+
+            <h5>3、已收货订单:</h5>
+            <c:forEach items="${order3}" var="orderinfoVo">
+                <table class="layui-table" lay-even="" lay-skin="row">
+                    <colgroup>
+                        <col width="150">
+                        <col width="150">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>收货人</th>
+                        <th>${orderinfoVo.orderinfo.rname}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>电话</td>
+                        <td>${orderinfoVo.orderinfo.rtel}</td>
+                    </tr>
+                    <tr>
+                        <td>收货地址</td>
+                        <td>${orderinfoVo.orderinfo.ofaddress}</td>
+                    </tr>
+                    <tr>
+                        <td>￥</td>
+                        <td>${orderinfoVo.orderinfo.ofprice}</td>
+                    </tr>
+                    <tr>
+                        <td>下单时间</td>
+                        <td>${orderinfoVo.orderinfo.stroftime}</td>
+                    </tr>
+                    <tr>
+                        <td>状态</td>
+                        <td>${orderinfoVo.orderinfo.ofstate}</td>
+                    </tr>
+                    <tr>
+                        <td>订单号</td>
+                        <td>${orderinfoVo.orderinfo.ofserial}</td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="main-item">
+                    <ul>
+                        <li></li>
+                        <li></li>
+                        <c:forEach items="${orderinfoVo.orderitemsVoList}" var="OrderitemsVo">
+                            <li>
+                                <div class="main-item-img">
+                                    <img style="height: 80px;width: 80px" src="${pageContext.request.contextPath}/coverimg/${OrderitemsVo.fimg}" alt="" />
+                                    <span>${OrderitemsVo.orderitems.fname}</span>
+                                    <span>${OrderitemsVo.orderitems.fprice}</span>
+                                    <div class="mask" onclick="fittingdetails('${OrderitemsVo.orderitems.fid}')">
+                                        <span class="glyphicon glyphicon-option-horizontal"></span>
+                                    </div>
+                                </div>
+                            </li>
+                        </c:forEach>
+                    </ul>
+                </div>
+            </c:forEach>
+            <br><br>
         </div>
         <div class="bottom">
             <button class="layui-btn" data-toggle="modal" data-target="#modal">创建我的装饰</button>
@@ -175,6 +346,17 @@
                 window.location=/user/delCollocations/+str;
             }
         }*/
+    </script>
+
+    <script>
+        //检查当前用户是否有默认地址
+        function checkMo() {
+            if(${address!=null}){
+                    document.getElementById("dinggouform").onsubmit();
+            }else{
+                alert("请设置默认收货地址！")
+            }
+        }
     </script>
 </body>
 

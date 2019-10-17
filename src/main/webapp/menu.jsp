@@ -27,9 +27,6 @@
     <script src="${pageContext.request.contextPath}/layui/layui.js"></script>
 </head>
 
-
-
-
 <body>
 
 <div class="layui-layout layui-layout-admin">
@@ -74,28 +71,44 @@
 
     </div>
 
+    <%--2205 460--%>
 
-    <%--条件筛选--%>
+    <%--轮播图--%>
+    <div class="layui-carousel" id="test10"><%--轮播容器--%>
+        <div carousel-item="">
+            <c:forEach items="${lunbopics}" var="lbpic">
+                <div><img src="${pageContext.request.contextPath}/lunbotu/${lbpic.lpic}"></div>
+            </c:forEach>
+        </div>
+    </div>
+
+
+
+
     <div class="main">
-        <div class="main-nav">
-            <ul class="layui-nav layui-nav-tree" lay-filter="test">
-                <li class="layui-nav-item">
-                    <a href="javascript:;">家居风格</a>
-                    <dl class="layui-nav-child">
-                        <c:forEach items="${style}" var="s">
-                            <dd><a href="${pageContext.request.contextPath}/fitting/selects/${s.sname}">${s.sname}</a></dd>
-                        </c:forEach>
-                    </dl>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;">家具种类</a>
-                    <dl class="layui-nav-child">
-                        <c:forEach items="${type}" var="t">
-                            <dd><a href="${pageContext.request.contextPath}/fitting/selectt/${t.tname}">${t.tname}</a></dd>
-                        </c:forEach>
-                    </dl>
-                </li>
-            </ul>
+        <div class="main-nav" style="margin-top: 35px">
+            <%--条件筛选--%>
+            <div>
+                <ul class="layui-nav layui-nav-tree" lay-filter="test" style="margin-top: 400px">
+                    <li class="layui-nav-item ">
+                        <a href="javascript:;">家居风格</a>
+                        <dl class="layui-nav-child">
+                            <c:forEach items="${style}" var="s">
+                                <dd><a href="${pageContext.request.contextPath}/fitting/selects/${s.sname}">${s.sname}</a></dd>
+                            </c:forEach>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;">家具种类</a>
+                        <dl class="layui-nav-child">
+                            <c:forEach items="${type}" var="t">
+                                <dd><a href="${pageContext.request.contextPath}/fitting/selectt/${t.tname}">${t.tname}</a></dd>
+                            </c:forEach>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+
         </div>
 
 
@@ -108,7 +121,7 @@
                             <div class="main-panel">
                                 <a href="${pageContext.request.contextPath}/fitting/details/${f.fid}">
                                     <img style="height: 200px;width: 190px" src="${pageContext.request.contextPath}/coverimg/${f.fimg}" alt="" />
-                                    <span>${f.fprice}</span>
+                                    <span>￥:${f.fprice}</span>
                                     <div>${f.fname}</div>
                                 </a>
                             </div>
@@ -119,9 +132,33 @@
         </div>
 
 
+        <%--热销榜--%>
+        <div style="margin-left: 85%;">
+            <%--<h3>热销榜</h3>--%>
+            <img height="117" width="199" src="${pageContext.request.contextPath}/static/top.jpg">
+            <c:forEach items="${topfittings}" var="topfitting">
+                <div id="topimg" style="width: 199px;height: 117px;border-top:1px dashed #CCCCCC;overflow: hidden;">
+                    <a href="${pageContext.request.contextPath}/fitting/details/${topfitting.fid}">
+                        <img style="display:inline;float:left;height: 100px;width:100px;" src="${pageContext.request.contextPath}/coverimg/${topfitting.fimg}">
+                        <div style="
+                        border-left: 15px solid red;
+                        border-right: 15px solid red;
+                        border-bottom: 10px solid transparent;
+                        ">
+                        </div>
+                        <ul>
+                            <li><span style="font-size: 16px;color: #EA2000;">已售:${topfitting.fsvolume}</span></li>
+                            <li><span style="font-size: 16px;color: #EA2000;">￥：${topfitting.fprice}</span></li>
+                            <li style="font-size: 12px;height: 38px;">${topfitting.fname}</li>
+                        </ul>
+                    </a>
+                </div>
+            </c:forEach>
+        </div>
+
         <%--分页--%>
-      <div>
-        <ul class="pagination" style="margin-top: 550px; margin-left: 600px">
+        <div>
+        <ul class="pagination" style="margin-top: 100px; margin-left: 600px">
             <li><a href="${pageContext.request.contextPath }/fitting/fittings/1">首页</a></li>
             <c:if test="${pageInfo.hasPreviousPage }">
                 <li><a href="${pageContext.request.contextPath }/fitting/fittings/${pageInfo.pageNum-1}"
@@ -149,22 +186,58 @@
 
     </div>
 
+    <%--留言--%>
+    <form class="layui-form layui-form-pane" action="${pageContext.request.contextPath}/message/add" method="post">
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">留言</label>
+            <div class="layui-input-block">
+                <textarea name="textmessage" placeholder="感谢您的建议和意见，我们才能做的更好" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button data-method="offset" data-type="auto" class="layui-btn" lay-submit="" lay-filter="demo2" onclick="islogin(); return false;">提 交</button>
+        </div>
+    </form>
+
+
+
 </div>
 
 
-
-
 <script type="text/javascript">
-    <%--验证码--%>
-    function changeImage(img){
-        img.src = img.src + "?" + new Date().getTime();
-    }
 
     /*全局搜索*/
     function search() {
         var str = document.getElementById("solrsearch").value;
         window.location = "${pageContext.request.contextPath}/fitting/search/"+str;
     }
+
+    /*点击评论按钮触发，检查是否已登录*/
+    function islogin(){
+        if(${user.uid==null}){
+            window.confirm("请先登录!");
+        }else{
+            document.getElementById("form1").onsubmit();//继续提交
+        }
+    }
+
+</script>
+
+<%--轮播图--%>
+<script>
+    layui.use(['carousel', 'form'], function(){
+        var carousel = layui.carousel
+            ,form = layui.form;
+
+        //图片相关
+        carousel.render({
+            elem: '#test10'
+            ,width: '100%'
+            ,height: '400px'
+            ,autoplay: 'true'
+            ,interval: 4000
+        });
+    });
 
 </script>
 
