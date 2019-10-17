@@ -1,0 +1,1 @@
+请创建fdecoration数据库，并运行sql文件，然后根据你的mysql连接信息修改db.properties
